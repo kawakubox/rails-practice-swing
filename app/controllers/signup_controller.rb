@@ -2,8 +2,10 @@
 
 class SignupController < ApplicationController
   def signup
-    user = User.create!(signup_params)
-    user.create_user_point!(point: 10_000)
+    ActiveRecord::Base.transaction do
+      user = User.create!(signup_params)
+      user.create_user_point!(point: 10_000)
+    end
   end
 
   private
