@@ -6,3 +6,8 @@ services:
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: yes
       TZ: Asia/Tokyo
+    volumes:
+      - db-storage:/var/lib/mysql
+
+volumes:
+  db-storage:
