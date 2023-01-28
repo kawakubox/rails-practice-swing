@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: :update
+  before_action :set_item, only: [:update, :destroy]
 
   def update
     unless @item.user_id == params[:user_id].to_i
@@ -9,6 +9,14 @@ class ItemsController < ApplicationController
     @item.update!(edit_params)
 
     render json: @item
+  end
+
+  def destroy
+    unless @item.user_id == params[:user_id].to_i
+      render status: :forbidden and return
+    end
+
+    @item.destroy!
   end
 
   private

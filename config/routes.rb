@@ -5,5 +5,5 @@ Rails.application.routes.draw do
   # root "articles#index"
   post '/exhibit', to: 'exhibit#exhibit', as: 'exhibit'
   post '/signup', to: 'signup#signup', as: 'signup'
-  resources :items, only: :update
+  resources :items, only: [:update, :destroy]
 end
