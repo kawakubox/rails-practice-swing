@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :item do
     user
-    name { '商品名' }
-    price { 5_000 }
+    name { Faker::Game.title }
+    price { Random.rand(1000..5000) }
   end
 end
