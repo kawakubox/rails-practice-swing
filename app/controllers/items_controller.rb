@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: [:update, :destroy]
+  before_action :set_item, only: [:update, :destroy, :buy]
 
   def update
     unless @item.user_id == params[:user_id].to_i
@@ -17,6 +17,19 @@ class ItemsController < ApplicationController
     end
 
     @item.destroy!
+  end
+
+  def buy
+    buyer = User.find(params[:buyer_id])
+
+    if buyer.user_point.point < @item.price
+      render status: :unprocessable_entity and return
+    end
+
+    ActiveRecord::Base.transaction do
+      Transaction.create!(item: @item, buyer: buyer)
+      buyer.user_point.spend(@item.price)
+    end
   end
 
   private
