@@ -18,9 +18,30 @@ Pre-requirements
 
 - homebrew
 
-
 ```sh
 $ brew bundle
+```
+
+# Database
+
+## Creation
+
+```sh
+$ bundle exec rails db:create
+```
+
+## Schema migration
+
+apply schema
+
+```sh
+$ bundle exec ridgepole --apply -c config/database.yml -f db/Schemafile
+````
+
+export schema
+
+```sh
+$ bundle exec ridgepole --export -c config/database.yml -o db/Schemafile
 ```
 
 ---
@@ -32,10 +53,6 @@ $ brew bundle
 * System dependencies
 
 * Configuration
-
-* Database creation
-
-* Database initialization
 
 * How to run the test suite
 
