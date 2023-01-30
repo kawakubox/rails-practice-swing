@@ -27,4 +27,11 @@ RSpec.describe 'UserPoint' do
       end
     end
   end
+
+  describe '#gain' do
+    let(:user_point) { create(:user_point, point: 10_000) }
+    it 'increase gain points' do
+      expect { user_point.gain(2_000) }.to change { user_point.reload.point }.to(12_000)
+    end
+  end
 end
