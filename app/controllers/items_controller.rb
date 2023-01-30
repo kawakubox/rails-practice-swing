@@ -27,7 +27,7 @@ class ItemsController < ApplicationController
     end
 
     ActiveRecord::Base.transaction do
-      Transaction.create!(item: @item, buyer: buyer)
+      Transaction.create!(item: @item, buyer: buyer, item_name: @item.name, item_price: @item.price)
       buyer.user_point.spend(@item.price)
     end
   end
