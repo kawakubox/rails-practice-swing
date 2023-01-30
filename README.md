@@ -1,6 +1,8 @@
 # rails-practice-swing
 Rails の素振り
 
+※API のリクエストユーザーの特定に関しては Authorization ヘッダの token などを利用するのが望ましいが、今回は body に user_id を含める形にしている。
+
 # データモデル
 
 ```mermaid
