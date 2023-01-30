@@ -1,0 +1,183 @@
+openapi: 3.0.0
+x-stoplight:
+  id: qype4hrow6skp
+info:
+  title: practice-swing
+  version: '1.0'
+servers:
+  - url: 'http://api.lvh.me:3000'
+paths:
+  /exhibit:
+    post:
+      summary: ''
+      operationId: post-exhibit
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+      description: Exhibit a item.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                item:
+                  type: object
+                  required:
+                    - user_id
+                    - name
+                    - price
+                  properties:
+                    user_id:
+                      type: integer
+                    name:
+                      type: string
+                    price:
+                      type: integer
+              required:
+                - item
+  /signup:
+    post:
+      summary: ''
+      operationId: post-signup
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '422':
+          description: Unprocessable Entity (WebDAV)
+      description: Create a user account.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nickname:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+              required:
+                - nickname
+                - email
+                - password
+  '/items/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+        description: Item ID
+    put:
+      summary: Edit item
+      operationId: put-items
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      description: Edit a item info.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                item:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    price:
+                      type: integer
+                      minimum: 0
+                      example: 1000
+              required:
+                - user_id
+                - item
+    delete:
+      summary: Delete Item
+      operationId: delete-items-id
+      responses:
+        '200':
+          description: OK
+      description: Delete a item.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+  /transactions:
+    post:
+      summary: ''
+      operationId: post-transactions
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      x-examples: {}
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the given user.
+          format: int64
+        nickname:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          description: The date that the user was created.
+          maxLength: 64
+          minLength: 64
+      required:
+        - id
+        - nickname
+        - email
+      description: User
+    Item:
+      title: Item
+      x-stoplight:
+        id: rsyqf4tvud9yu
+      type: object
+      description: Item
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        price:
+          type: integer
+        owner:
+          $ref: '#/components/schemas/User'
+      required:
+        - id
+        - name
+        - price
