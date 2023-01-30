@@ -8,4 +8,10 @@ class UserPoint < ApplicationRecord
     self.point = point - usage
     self.save!
   end
+
+  # @param gain [Integer]
+  def gain(gain)
+    self.point = point + gain
+    self.save!
+  end
 end

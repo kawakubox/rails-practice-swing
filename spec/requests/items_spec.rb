@@ -52,11 +52,12 @@ RSpec.describe "Items", type: :request do
       expect(Transaction.last).to have_attributes(item_name: item.name, item_price: item.price)
     end
 
-    it 'add a transactions record and reduce points' do
+    it 'add a transactions record and reduce/increase points' do
       expect {
         post buy_item_path(item), params: { buyer_id: buyer.id }
       }.to change { Transaction.count }.by(1).
-        and change { User.find(buyer.id).user_point.point }.by(item.price * -1)
+        and change { User.find(buyer.id).user_point.point }.by(item.price * -1).
+          and change { User.find(item.user_id).user_point.point }.by(item.price)
     end
 
     context 'when buyer does not have enough points' do
