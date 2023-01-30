@@ -47,6 +47,11 @@ RSpec.describe "Items", type: :request do
       expect(response).to have_http_status(:no_content)
     end
 
+    it 'stored item price and name at the time of purchase' do
+      post buy_item_path(item), params: { buyer_id: buyer.id }
+      expect(Transaction.last).to have_attributes(item_name: item.name, item_price: item.price)
+    end
+
     it 'add a transactions record and reduce points' do
       expect {
         post buy_item_path(item), params: { buyer_id: buyer.id }
